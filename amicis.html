@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMICIS – Przychodnia Weterynaryjna Gdańsk</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --forest: #1B3A2D;
+    --forest-mid: #2C5540;
+    --sage: #7AAE8E;
+    --sage-pale: #C8DDD2;
+    --cream: #F8F5F0;
+    --warm-white: #FDFCFA;
+    --gold: #C9A84C;
+    --gold-pale: #EDD98A;
+    --charcoal: #1E2320;
+    --text-muted: #5A6B60;
+    --text-body: #2D3A30;
+    --border: rgba(27,58,45,0.12);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--warm-white); color: var(--text-body); font-size: 16px; line-height: 1.7; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 72px; background: rgba(253,252,250,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(27,58,45,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon { width: 38px; height: 38px; background: var(--forest); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .nav-logo-icon svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .nav-logo-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: var(--forest); letter-spacing: 0.03em; }
+  .nav-logo-sub { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); font-weight: 500; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--forest); }
+  .nav-cta { background: var(--forest); color: #fff; font-size: 14px; font-weight: 500; padding: 10px 22px; border-radius: 8px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .nav-cta:hover { background: var(--forest-mid); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 48px 80px; position: relative; overflow: hidden;
+    background-color: var(--forest);
+    background-image: url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1800&q=80&fit=crop');
+    background-size: cover; background-position: center 30%;
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(15,30,20,0.88) 0%,
+      rgba(20,45,32,0.80) 45%,
+      rgba(10,25,18,0.65) 100%
+    );
+  }
+  .hero-grid { position: absolute; inset: 0; opacity: 0.03; background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); padding: 8px 16px; border-radius: 100px; margin-bottom: 32px; }
+  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .hero-eyebrow span { font-size: 12px; font-weight: 500; color: var(--gold-pale); letter-spacing: 0.1em; text-transform: uppercase; }
+  .hero-headline { font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 72px); font-weight: 600; color: #fff; line-height: 1.1; margin-bottom: 8px; }
+  .hero-headline em { font-style: italic; color: var(--sage); }
+  .hero-sub { font-family: 'Playfair Display', serif; font-size: clamp(18px, 2.5vw, 26px); font-weight: 400; font-style: italic; color: rgba(255,255,255,0.55); margin-bottom: 28px; line-height: 1.4; }
+  .hero-quote { border-left: 2px solid var(--gold); padding-left: 20px; margin-bottom: 48px; max-width: 540px; }
+  .hero-quote p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.65; font-style: italic; }
+  .hero-quote cite { font-size: 12px; color: var(--gold); font-style: normal; display: block; margin-top: 8px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+  .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--forest); font-weight: 600; font-size: 15px; padding: 14px 28px; border-radius: 10px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+  .btn-ghost { color: rgba(255,255,255,0.75); font-size: 15px; font-weight: 400; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  .btn-ghost:hover { color: #fff; }
+  .hero-stats { position: absolute; bottom: 48px; right: 48px; z-index: 2; display: flex; gap: 32px; }
+  .hero-stat { text-align: right; }
+  .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; color: #fff; line-height: 1; }
+  .hero-stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.45); font-weight: 500; margin-top: 4px; }
+  .hero-badge { position: absolute; top: 140px; right: 48px; z-index: 2; width: 140px; height: 140px; border: 1px solid rgba(122,174,142,0.3); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .hero-badge-since { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--sage); font-weight: 500; }
+  .hero-badge-year { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 600; color: #fff; line-height: 1; }
+  .hero-badge-label { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* SECTIONS */
+  section { padding: 100px 48px; }
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--sage); font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; width: 28px; height: 1px; background: var(--sage); }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 600; color: var(--forest); line-height: 1.15; margin-bottom: 20px; }
+  .section-title em { font-style: italic; }
+  .section-desc { font-size: 17px; color: var(--text-muted); max-width: 560px; line-height: 1.75; }
+
+  /* HOURS */
+  .hours-strip { background: var(--forest); padding: 28px 48px; display: flex; align-items: center; gap: 48px; flex-wrap: wrap; }
+  .hours-strip-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--sage); font-weight: 600; white-space: nowrap; }
+  .hours-items { display: flex; gap: 40px; flex-wrap: wrap; }
+  .hours-item { display: flex; flex-direction: column; gap: 2px; }
+  .hours-day { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); font-weight: 500; }
+  .hours-time { font-size: 20px; font-weight: 300; color: #fff; letter-spacing: -0.01em; }
+  .hours-time strong { font-weight: 600; }
+  .hours-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.1); }
+
+  /* OFFER */
+  .offer-section { background: var(--cream); }
+  .offer-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-bottom: 60px; flex-wrap: wrap; }
+  .offer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .offer-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; cursor: default; position: relative; overflow: hidden; }
+  .offer-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--forest); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .offer-card:hover::before { transform: scaleX(1); }
+  .offer-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(27,58,45,0.1); border-color: rgba(27,58,45,0.2); }
+  .offer-icon { width: 48px; height: 48px; background: rgba(27,58,45,0.07); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .offer-icon svg { width: 24px; height: 24px; stroke: var(--forest); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .offer-card h3 { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 600; color: var(--forest); margin-bottom: 10px; }
+  .offer-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+  .offer-card ul { margin-top: 10px; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .offer-card ul li { font-size: 13px; color: var(--text-muted); padding-left: 14px; position: relative; }
+  .offer-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--sage); }
+
+  /* TEAM */
+  .team-section { background: var(--warm-white); }
+  .team-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .team-intro { position: sticky; top: 100px; }
+  .team-count { display: flex; align-items: baseline; gap: 8px; margin-top: 32px; }
+  .team-count-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 600; color: var(--forest); line-height: 1; }
+  .team-count-text { font-size: 14px; color: var(--text-muted); max-width: 140px; line-height: 1.4; }
+  .team-cards { display: flex; flex-direction: column; gap: 20px; }
+  .team-card { background: var(--cream); border: 1px solid var(--border); border-radius: 16px; padding: 28px 32px; transition: border-color 0.2s, background 0.2s; }
+  .team-card:hover { border-color: var(--sage); background: rgba(122,174,142,0.06); }
+  .team-card-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+  .team-avatar { width: 52px; height: 52px; flex-shrink: 0; border-radius: 50%; background: var(--forest); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #fff; }
+  .team-card h4 { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; color: var(--forest); }
+  .team-card .role { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); font-weight: 600; margin-top: 2px; }
+  .team-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+  .team-card-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+  .tag { font-size: 12px; padding: 4px 12px; border-radius: 100px; background: rgba(27,58,45,0.07); color: var(--forest); font-weight: 500; }
+
+  /* ANIMALS */
+  .animals-section { background: var(--forest); overflow: hidden; position: relative; }
+  .animals-section .section-label { color: var(--sage); }
+  .animals-section .section-label::before { background: var(--sage); }
+  .animals-section .section-title { color: #fff; }
+  .animals-section .section-desc { color: rgba(255,255,255,0.6); }
+  .animals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 56px; }
+  .animal-pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 24px 20px; text-align: center; transition: background 0.2s, border-color 0.2s; }
+  .animal-pill:hover { background: rgba(255,255,255,0.1); border-color: rgba(122,174,142,0.4); }
+  .animal-emoji { font-size: 36px; display: block; margin-bottom: 10px; }
+  .animal-name { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); }
+
+  /* EQUIPMENT */
+  .equip-section { background: var(--cream); }
+  .equip-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .equip-list { display: flex; flex-direction: column; }
+  .equip-item { display: flex; align-items: flex-start; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .equip-item:first-child { border-top: 1px solid var(--border); }
+  .equip-num { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 400; color: var(--gold); min-width: 28px; margin-top: 2px; }
+  .equip-text h4 { font-size: 16px; font-weight: 600; color: var(--forest); margin-bottom: 4px; }
+  .equip-text p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  /* CONTACT */
+  .contact-section { background: var(--warm-white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-details { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
+  .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+  .contact-icon { width: 44px; height: 44px; flex-shrink: 0; background: rgba(27,58,45,0.07); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .contact-icon svg { width: 20px; height: 20px; stroke: var(--forest); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-item h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+  .contact-item p { font-size: 16px; color: var(--text-body); }
+  .contact-item a { color: var(--forest); text-decoration: none; font-weight: 500; }
+  .contact-item a:hover { text-decoration: underline; }
+  .contact-map-placeholder { background: var(--cream); border: 1px solid var(--border); border-radius: 16px; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text-muted); font-size: 14px; }
+  .contact-map-placeholder svg { width: 40px; height: 40px; stroke: var(--sage); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.7; }
+  .contact-payments { margin-top: 28px; padding: 20px 24px; background: var(--cream); border-radius: 12px; display: flex; align-items: center; gap: 12px; }
+  .contact-payments svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-payments span { font-size: 14px; color: var(--text-muted); }
+  .contact-payments strong { color: var(--text-body); }
+
+  /* FOOTER */
+  footer { background: var(--charcoal); padding: 48px 48px 32px; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 12px; max-width: 220px; line-height: 1.6; }
+  .footer-links { display: flex; gap: 48px; }
+  .footer-col h5 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.35); font-weight: 600; margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 28px; flex-wrap: wrap; gap: 16px; }
+  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links, .nav-cta { display: none; }
+    section { padding: 72px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-badge, .hero-stats { display: none; }
+    .hero-headline { font-size: 40px; }
+    .hours-strip { padding: 24px; gap: 24px; }
+    .hours-items { gap: 24px; }
+    .team-layout, .equip-layout, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .team-intro { position: static; }
+    .animals-grid { grid-template-columns: repeat(2, 1fr); }
+    .offer-grid { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; }
+    .footer-links { flex-wrap: wrap; gap: 32px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 21C12 21 4 14.5 4 9a8 8 0 0116 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">Amicis</span>
+      <span class="nav-logo-sub">Przychodnia Weterynaryjna</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#oferta">Oferta</a></li>
+    <li><a href="#zespol">Zespół</a></li>
+    <li><a href="#pacjenci">Pacjenci</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <a href="tel:585301914 3" class="nav-cta">Umów wizytę →</a>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge">
+    <span class="hero-badge-since">Założona</span>
+    <span class="hero-badge-year">1994</span>
+    <span class="hero-badge-label">w Gdańsku</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      <span>Gdańsk · ul. Elbląska 65</span>
+    </div>
+    <h1 class="hero-headline">Troska, która<br><em>nie wymaga słów</em></h1>
+    <p class="hero-sub">Przychodnia Weterynaryjna AMICIS</p>
+    <div class="hero-quote">
+      <p>„Jak dotąd nikt nie dowiódł, że zwierzęta odczuwają ból inaczej niż człowiek. Dlatego należy przyjąć, że zwierzęta odczuwają ból w taki sam sposób jak człowiek."</p>
+      <cite>Prof. Janosz Butinar</cite>
+    </div>
+    <div class="hero-actions">
+      <a href="tel:585301914 3" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (58) 301 91 43
+      </a>
+      <a href="#oferta" class="btn-ghost">
+        Poznaj naszą ofertę
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">30+</div>
+      <div class="hero-stat-label">Lat doświadczenia</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">Lekarzy</div>
+    </div>
+  </div>
+</section>
+
+<div class="hours-strip">
+  <span class="hours-strip-label">Godziny otwarcia</span>
+  <div class="hours-items">
+    <div class="hours-item">
+      <span class="hours-day">Pon – Pt</span>
+      <span class="hours-time"><strong>8:00</strong> – 20:00</span>
+    </div>
+    <div class="hours-divider"></div>
+    <div class="hours-item">
+      <span class="hours-day">Sobota</span>
+      <span class="hours-time"><strong>9:00</strong> – 16:00</span>
+    </div>
+  </div>
+  <div style="margin-left:auto; display:flex; align-items:center; gap:10px; flex-shrink:0;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(122,174,142,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+    <span style="font-size:13px; color:rgba(255,255,255,0.5);">Akceptujemy karty płatnicze</span>
+  </div>
+</div>
+
+<section class="offer-section" id="oferta">
+  <div class="offer-header">
+    <div>
+      <div class="section-label">Zakres usług</div>
+      <h2 class="section-title">Kompleksowa opieka<br><em>pod jednym dachem</em></h2>
+    </div>
+    <p class="section-desc">Od rutynowych wizyt kontrolnych po zaawansowaną chirurgię — nasz zespół i nowoczesny sprzęt pozwalają zaopiekować się Twoim pupilem na każdym etapie.</p>
+  </div>
+  <div class="offer-grid">
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h3>Profilaktyka</h3>
+      <ul>
+        <li>Szczepienia przeciwko chorobom zakaźnym</li>
+        <li>Odrobaczanie</li>
+        <li>Ochrona przeciwko pasożytom zewnętrznym</li>
+        <li>Testy w kierunku chorób zakaźnych</li>
+        <li>Chipowanie zwierząt i paszporty</li>
+      </ul>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+      </div>
+      <h3>Diagnostyka laboratoryjna</h3>
+      <ul>
+        <li>Biochemiczne i morfologiczne badanie krwi</li>
+        <li>Badanie kału na obecność pasożytów</li>
+        <li>Pobieranie materiałów do badań bakteriologicznych</li>
+        <li>Badania mykologiczne i histopatologiczne</li>
+      </ul>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Diagnostyka obrazowa i kardiologia</h3>
+      <ul>
+        <li>USG jamy brzusznej i Echo serca z Dopplerem</li>
+        <li>RTG klatki piersiowej, jamy brzusznej, kręgosłupa i kończyn</li>
+        <li>EKG – diagnozowanie chorób serca</li>
+        <li>Pomiar ciśnienia krwi</li>
+        <li>Wideootoskopia i rhinoskopia</li>
+      </ul>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 105 2H4a2 2 0 00-2 2v5a6 6 0 006 6v0a6 6 0 006-6V4a2 2 0 00-2-2h-1a.2.2 0 10.3.3"/><path d="M8 15v1a6 6 0 006 6v0a6 6 0 006-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
+      </div>
+      <h3>Leczenie wewnętrzne</h3>
+      <ul>
+        <li>Diagnostyka i leczenie chorób wewnętrznych</li>
+        <li>Diagnostyka i leczenie kardiologiczne</li>
+        <li>Tlenoterapia</li>
+      </ul>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Chirurgia</h3>
+      <ul>
+        <li>Chirurgia tkanek miękkich</li>
+        <li>Sterylizacja i kastracja</li>
+        <li>Zabiegi na przewodzie pokarmowym i moczowym</li>
+        <li>Zabiegi w narkozie wziewnej z pełnym monitoringiem</li>
+      </ul>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <h3>Ortopedia</h3>
+      <ul>
+        <li>Diagnostyka dysplazji stawów biodrowych</li>
+        <li>Leczenie chirurgiczne zerwanego więzadła krzyżowego</li>
+        <li>Osteosynteza metodą zespol</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="team-section" id="zespol">
+  <div class="team-layout">
+    <div class="team-intro">
+      <div class="section-label">Nasz zespół</div>
+      <h2 class="section-title">Leczenie<br><em>z powołania</em></h2>
+      <p class="section-desc">Ciągłe szkolenia, konferencje i warsztaty to dla nas norma — nie wyjątek. Łączymy doświadczenie z najnowszymi osiągnięciami medycyny weterynaryjnej.</p>
+      <div class="team-count">
+        <span class="team-count-num">7</span>
+        <span class="team-count-text">lekarzy weterynarii w Twojej służbie</span>
+      </div>
+    </div>
+    <div class="team-cards">
+
+      <div class="team-card">
+        <div class="team-card-head">
+          <div class="team-avatar">WU</div>
+          <div>
+            <h4>lek. wet. Wojciech Ulewicz</h4>
+            <div class="role">Współwłaściciel · Kardiolog</div>
+          </div>
+        </div>
+        <p>Specjalista chorób psów i kotów z pasją do kardiologii. Ukończył liczne kursy prowadzone przez czołowych polskich kardiologów weterynaryjnych — dr Magdalenę Garncarz i lek. wet. Rafała Niziołka. Wykonuje badania kardiologiczne, EKG, fonokardiografię i ECHO serca z diagnostyką dopplerowską.</p>
+        <div class="team-card-tags">
+          <span class="tag">Kardiologia</span>
+          <span class="tag">Choroby psów i kotów</span>
+          <span class="tag">Echokardiografia</span>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card-head">
+          <div class="team-avatar">ZZ</div>
+          <div>
+            <h4>lek. wet. Zbigniew Zaleski</h4>
+            <div class="role">Współwłaściciel · Chirurg</div>
+          </div>
+        </div>
+        <p>Specjalista radiologii weterynaryjnej oraz chorób ptaków. Jego największą pasją jest chirurgia i ortopedia. Odpowiada za diagnostykę obrazową i zaawansowane zabiegi operacyjne, w tym osteosyntezę i leczenie zerwanego więzadła krzyżowego.</p>
+        <div class="team-card-tags">
+          <span class="tag">Chirurgia</span>
+          <span class="tag">Ortopedia</span>
+          <span class="tag">Radiologia</span>
+          <span class="tag">Choroby ptaków</span>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card-head">
+          <div style="display:flex; flex-wrap:wrap; gap:10px; width:100%;">
+            <div class="team-avatar" style="background: var(--sage); color: var(--forest); font-size:13px;">MM</div>
+            <div class="team-avatar" style="background: var(--sage); color: var(--forest); font-size:13px;">MZ</div>
+            <div class="team-avatar" style="background: var(--sage); color: var(--forest); font-size:13px;">MA</div>
+            <div class="team-avatar" style="background: var(--sage); color: var(--forest); font-size:13px;">KK</div>
+            <div class="team-avatar" style="background: var(--sage); color: var(--forest); font-size:13px;">EW</div>
+          </div>
+        </div>
+        <h4 style="font-family:'Playfair Display',serif; font-size:17px; color:var(--forest); margin-bottom:8px;">Lekarze weterynarii</h4>
+        <p>lek. wet. Marta Michalska · lek. wet. Monika Zielniewska-Kapałka · lek. wet. Marta Antczak-Stasiak · lek. wet. Kamila Kwapisiewicz · lek. wet. Elżbieta Wybult</p>
+        <p style="margin-top:10px; color:var(--text-muted);">Personel techniczny: tech. wet. Klaudia Rutkowska · tech. wet. Marta Nogieć</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="animals-section" id="pacjenci">
+  <div class="section-label">Nasi pacjenci</div>
+  <h2 class="section-title" style="max-width:480px;">Każde zwierzę zasługuje na <em>najlepszą opiekę</em></h2>
+  <p class="section-desc">Przyjmujemy zwierzęta towarzyszące wszystkich ras i gatunków — od psów i kotów po bardziej egzotycznych podopiecznych.</p>
+  <div class="animals-grid">
+    <div class="animal-pill"><span class="animal-emoji">🐕</span><span class="animal-name">Psy</span></div>
+    <div class="animal-pill"><span class="animal-emoji">🐈</span><span class="animal-name">Koty</span></div>
+    <div class="animal-pill"><span class="animal-emoji">🐇</span><span class="animal-name">Króliki</span></div>
+    <div class="animal-pill"><span class="animal-emoji">🐹</span><span class="animal-name">Chomiki</span></div>
+    <div class="animal-pill"><span class="animal-emoji">🐾</span><span class="animal-name">Fretki</span></div>
+    <div class="animal-pill"><span class="animal-emoji">🐾</span><span class="animal-name">Świnki morskie</span></div>
+    <div class="animal-pill"><span class="animal-emoji">🐦</span><span class="animal-name">Ptaki</span></div>
+    <div class="animal-pill"><span class="animal-emoji">🐭</span><span class="animal-name">Szynszyle</span></div>
+  </div>
+</section>
+
+<section class="equip-section">
+  <div class="equip-layout">
+    <div>
+      <div class="section-label">Wyposażenie</div>
+      <h2 class="section-title">Nowoczesna<br><em>aparatura medyczna</em></h2>
+      <p class="section-desc" style="margin-top:16px;">Nieustannie inwestujemy w sprzęt — bo szybka i precyzyjna diagnostyka bezpośrednio przekłada się na skuteczność leczenia.</p>
+    </div>
+    <div class="equip-list">
+      <div class="equip-item">
+        <span class="equip-num">01</span>
+        <div class="equip-text">
+          <h4>Aparat USG – Esaote</h4>
+          <p>Ultrasonograf do obrazowania jamy brzusznej oraz badania serca (Echo z Dopplerem) w czasie rzeczywistym.</p>
+        </div>
+      </div>
+      <div class="equip-item">
+        <span class="equip-num">02</span>
+        <div class="equip-text">
+          <h4>Aparat RTG – Gierth z wywoływarką cyfrową</h4>
+          <p>Cyfrowe zdjęcia klatki piersiowej, jamy brzusznej, kręgosłupa i kończyn — natychmiast dostępne do oceny.</p>
+        </div>
+      </div>
+      <div class="equip-item">
+        <span class="equip-num">03</span>
+        <div class="equip-text">
+          <h4>Znieczulenie wziewne z pełnym monitoringiem</h4>
+          <p>Nowoczesna aparatura do anestezji i monitorowania parametrów życiowych przez cały czas trwania zabiegu.</p>
+        </div>
+      </div>
+      <div class="equip-item">
+        <span class="equip-num">04</span>
+        <div class="equip-text">
+          <h4>Wideootoskop i rhinoskop</h4>
+          <p>Zaawansowana endoskopia diagnostyczna uszu i dróg oddechowych bez konieczności inwazyjnych procedur.</p>
+        </div>
+      </div>
+      <div class="equip-item">
+        <span class="equip-num">05</span>
+        <div class="equip-text">
+          <h4>Tlenoterapia</h4>
+          <p>Wspomaganie oddychania i leczenie niedotlenienia — ważny element opieki nad pacjentami w ciężkim stanie.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="kontakt">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label">Kontakt</div>
+      <h2 class="section-title">Znajdź<br><em>nas w Gdańsku</em></h2>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <h4>Adres</h4>
+            <p>ul. Elbląska 65<br>80-853 Gdańsk</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <h4>Telefon</h4>
+            <p><a href="tel:585301914 3">(58) 301 91 43</a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <h4>E-mail</h4>
+            <p><a href="mailto:przychodniaamicis@wp.pl">przychodniaamicis@wp.pl</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-payments">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        <span><strong>Akceptujemy karty płatnicze</strong></span>
+      </div>
+    </div>
+    <div class="contact-map-placeholder">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <p style="font-size:15px; font-weight:500; color:var(--forest);">ul. Elbląska 65, Gdańsk</p>
+      <a href="https://maps.google.com/?q=ul.+Elbląska+65+Gdańsk" target="_blank" style="margin-top:8px; font-size:13px; color:var(--forest); font-weight:600; text-decoration:none; border:1px solid var(--border); padding:10px 20px; border-radius:8px; background:var(--warm-white);">Otwórz w Mapach Google →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#top" class="nav-logo" style="text-decoration:none;">
+        <div class="nav-logo-icon"><svg viewBox="0 0 24 24" style="stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;"><path d="M12 21C12 21 4 14.5 4 9a8 8 0 0116 0c0 5.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-name" style="color:#fff;">Amicis</span>
+          <span class="nav-logo-sub">Przychodnia Weterynaryjna</span>
+        </div>
+      </a>
+      <p>Gdańsk, ul. Elbląska 65<br>Przychodnia założona w 1994 roku.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h5>Strony</h5>
+        <a href="#oferta">Oferta</a>
+        <a href="#zespol">Zespół</a>
+        <a href="#pacjenci">Pacjenci</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div class="footer-col">
+        <h5>Kontakt</h5>
+        <a href="tel:585301914 3">(58) 301 91 43</a>
+        <a href="mailto:przychodniaamicis@wp.pl">przychodniaamicis@wp.pl</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Amicis s.c. Przychodnia Weterynaryjna Gdańsk</p>
+    <p>Projekt strony: propozycja modernizacji</p>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+</script>
+</body>
+</html>
